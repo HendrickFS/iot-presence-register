@@ -6,7 +6,13 @@ def readSerial():
     print("Listening serial port...")
     while True:
         print("Received: ", ser.readline())
+        processData(ser.readline())
 
 
 def processData(data):
-    print("Processing data: ", data)
+    from rfidLog.models import employee, rfidLog
+    employeeId = data.decode('utf-8')
+    employeeId = employeeId.replace('\r\n', '')
+    employee = employee.objects.get(rfid=employeeId)
+    print("Employee: ", employee)
+    employee.save()
