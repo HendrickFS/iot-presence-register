@@ -4,6 +4,10 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
 // 
 MFRC522::MIFARE_Key key;
 
+// Create a cache of 10 elements to store a timeout until the card is valid again
+CacheUid cache[10];
+byte cacheSize = 10;
+
 
 void setup() {
     Serial.begin(9600); // Initialize serial communications with the PC
@@ -17,16 +21,23 @@ void setup() {
 
     Serial.println(F("Ready to read RFID card"));
 
+    initializeCache(cache, cacheSize);
 }
 
 void loop() {
+  updateCache(cache, cacheSize);
+
   byte uid[4];
   if (readRFID(uid, mfrc522)) {
-    Serial.print(F("UID: "));
-    dumpToSerial(uid, 4);
-    Serial.println();
+    if (isInCache(uid, cache, cacheSize)) {
+      return;
+    } else {
+      addToCache(uid, cache, cacheSize, 1000);
+      dumpToSerial(uid, 4);
+      Serial.println();
+    }
   }
-
+  Serial.flush();
 }
 
 void dumpToSerial(byte* buffer, byte bufferSize) {
