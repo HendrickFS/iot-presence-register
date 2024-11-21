@@ -16,8 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+
+from rfidLog.api import viewsets
+from rfidLog.views import logsAPIView, employeesAPIView, presentsAPIView, logsByEmployeeAPIView
+
+route = routers.DefaultRouter()
+
+route.register(r'employee', viewsets.employeeViewSet)
+route.register(r'rfidLog', viewsets.rfidLogViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('log/', include('rfidLog.urls'))
+    path('api/', include(route.urls)),
+    path('logs/', logsAPIView.as_view()),
+    path('logs/<str:rfid>/', logsByEmployeeAPIView.as_view()),
+    path('employees/', employeesAPIView.as_view()),
+    path('presents/', presentsAPIView.as_view()),
+
 ]
