@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcionários</title>
+</head>
+<body>
+    <h1>Lista de Funcionários</h1>
+    <ul>
+        {% for employee in employees %}
+            <li>{{ employee.name }} - {{ employee.email }}</li>
+        {% empty %}
+            <li>Não há funcionários cadastrados.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -39,3 +39,11 @@ class presentsAPIView(APIView):
         serializer = employeeSerializer(presents, many=True)
         return Response(serializer.data)
     
+
+def employeesList(request):
+    employees = employee.objects.all()
+    return render(request, 'rfidLog/employeesList.html', {'employees': employees})
+    
+def logsList(request):
+    logs = rfidLog.objects.all()
+    return render(request, 'rfidLog/logsList.html', {'logs': logs})

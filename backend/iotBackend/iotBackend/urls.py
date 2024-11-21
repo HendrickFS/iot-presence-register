@@ -19,7 +19,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 from rfidLog.api import viewsets
-from rfidLog.views import logsAPIView, employeesAPIView, presentsAPIView, logsByEmployeeAPIView
+from rfidLog.views import logsAPIView, employeesAPIView, presentsAPIView, logsByEmployeeAPIView, employeesList, logsList
 
 route = routers.DefaultRouter()
 
@@ -33,5 +33,8 @@ urlpatterns = [
     path('logs/<str:rfid>/', logsByEmployeeAPIView.as_view()),
     path('employees/', employeesAPIView.as_view()),
     path('presents/', presentsAPIView.as_view()),
+
+    path('employeesList/', employeesList, name='employeesList'),
+    path('logsList/', logsList, name='logsList'),
 
 ]
