@@ -42,6 +42,15 @@ class presentsAPIView(APIView):
 
 def employeesList(request):
     employees = employee.objects.all()
+    for emp in employees:
+        logs = rfidLog.objects.filter(employee=emp.rfid)
+        if logs.count() > 0:
+            if logs[logs.count() - 1].type == 'IN':
+                emp.present = True
+            else:
+                emp.present = False
+        else:
+            emp.present = False
     return render(request, 'rfidLog/employeesList.html', {'employees': employees})
     
 def logsList(request):

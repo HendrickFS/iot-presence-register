@@ -4,14 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Funcionários</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .employee{
+            border: 1px solid #000;
+            padding: 20px;
+            margin: 10px;
+            width: 600px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        li{
+            list-style: none;
+        }
+        #present{
+            color: green;
+        }
+        #absent{
+            color: red;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Lista de Funcionários</h1>
+    <h1 id="header">Lista de Funcionários:</h1>
     <ul>
         {% for employee in employees %}
-            <li>{{ employee.name }} - {{ employee.email }}</li>
+        <li>
+            <div class="employee">
+                <div>
+                    <h2>
+                        {{employee.name}}
+                    </h2>
+                    <p>
+                        {{employee.email}}
+                    </p>
+                </div>
+                <div>
+                    {% if employee.present %}
+                        <h2 id="present">Presente</h2>
+                    {% else %}
+                        <h2 id="absent">Ausente</h2>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
         {% empty %}
-            <li>Não há funcionários cadastrados.</li>
+            <li>
+                <h2>Não há Funcionários cadastrados</h2>
+            </li>
         {% endfor %}
     </ul>
 </body>
