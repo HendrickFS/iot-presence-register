@@ -39,6 +39,16 @@
         #absent{
             color: red;
         }
+        .icon{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .profile{
+            display: flex;
+            flex-direction: row;
+        }
 
     </style>
 </head>
@@ -52,6 +62,10 @@
         {% else %}
             <div class="employeeAbsent">
         {% endif %}
+            <div class="profile">
+                <div>
+                    <img src="{{employee.icon}}" alt="Foto do Funcionário" class="icon">
+                </div>
                 <div>
                     <h2>
                         {{employee.name}}
@@ -60,6 +74,8 @@
                         {{employee.email}}
                     </p>
                 </div>
+            </div>
+
                 <div>
                     {% if employee.present %}
                         <h2 id="present">Presente</h2>

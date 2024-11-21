@@ -4,6 +4,7 @@ class employee(models.Model):
     rfid = models.CharField(max_length=10, primary_key=True, unique=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
+    icon = models.CharField(max_length=100, default="./assets/person.jpg")
 
     def __str__(self):
         return self.name

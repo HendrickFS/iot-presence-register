@@ -14,6 +14,12 @@ class logsAPIView(APIView):
         logs = rfidLog.objects.all()
         serializer = rfidLogSerializer(logs, many=True)
         return Response(serializer.data)
+    def post(self, request):
+        serializer = rfidLogSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class logsByEmployeeAPIView(APIView):
     def get(self, request, rfid):
@@ -55,4 +61,7 @@ def employeesList(request):
     
 def logsList(request):
     logs = rfidLog.objects.all()
+    for log in logs:
+        timestamp = log.timestamp
+        log.timestamp = timestamp.strftime("Data: %d/%m/%Y | Horário: %H:%M:%S")
     return render(request, 'rfidLog/logsList.html', {'logs': logs})
