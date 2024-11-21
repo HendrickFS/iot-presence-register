@@ -16,7 +16,7 @@ class rfidLog(models.Model):
 
     employee = models.ForeignKey(employee, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
-    type = models.CharField(max_length=3, choices=types)
+    type = models.CharField(max_length=3)
 
     def __str__(self):
         return self.employee.name + " " + str(self.timestamp)
