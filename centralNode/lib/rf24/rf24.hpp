@@ -1,6 +1,6 @@
-#pragma once
 #include <SPI.h>
 #include "RF24.h"
+#include "printf.h"
 
 #define CE_PIN 7
 #define CSN_PIN 8
