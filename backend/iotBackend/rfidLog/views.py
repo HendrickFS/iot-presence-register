@@ -16,6 +16,15 @@ class logsAPIView(APIView):
         return Response(serializer.data)
     def post(self, request):
         serializer = rfidLogSerializer(data=request.data)
+        logs = rfidLog.objects.filter(employee=request.data['employee'])
+        if logs.count() == 0:
+            request.data['type'] = 'IN'
+        else:
+            if logs[logs.count()-1].type == 'IN':
+                request.data['type'] = 'OUT'
+            else:
+                request.data['type'] = 'IN'
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

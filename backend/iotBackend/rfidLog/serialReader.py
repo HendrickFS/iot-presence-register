@@ -28,3 +28,15 @@ def processData(data):
         newLog.save()
     except:
         print("Employee not found")
+
+def sensorsToSerial():
+    from rfidLog.models import sensor
+    ser = serial.Serial('COM4', 9600)
+    print("Printing sensors states at serial port...")
+    sensors = sensor.objects.all()
+    for s in sensors:
+        ser.write(s.id.encode())
+        ser.write(b' ')
+        ser.write(str(s.enabled).encode())
+        ser.write(b'\n')
+
