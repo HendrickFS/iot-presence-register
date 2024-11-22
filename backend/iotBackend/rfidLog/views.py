@@ -81,3 +81,6 @@ def logsList(request):
 def sensorsList(request):
     sensors = sensor.objects.all()
     return render(request, 'rfidLog/sensorsList.html', {'sensors': sensors})
+
+def index(request):
+    return render(request, 'rfidLog/index.html')

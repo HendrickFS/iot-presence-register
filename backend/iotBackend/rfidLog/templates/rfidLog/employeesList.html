@@ -6,9 +6,38 @@
     <title>Funcionários</title>
 
     <style>
-        body{
+        body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            display: block;
+        }
+        nav ul li a:hover {
+            background-color: #575757;
+            border-radius: 4px;
+        }
+        li{
+            list-style: none;
         }
         .employeePresent{
             border: 2px solid green;
@@ -30,9 +59,6 @@
             flex-direction: row;
             justify-content: space-between;
         }
-        li{
-            list-style: none;
-        }
         #present{
             color: green;
         }
@@ -53,6 +79,19 @@
     </style>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li>
+                <a href="/sensorsList/">Sensores</a>
+            </li>
+            <li>
+                <a href="/employeesList/">Funcionários</a>
+            </li>
+            <li>
+                <a href="/logsList/">Registros</a>
+            </li>
+        </ul>
+    </nav>
     <h1 id="header">Lista de Funcionários:</h1>
     <ul>
         {% for employee in employees %}
