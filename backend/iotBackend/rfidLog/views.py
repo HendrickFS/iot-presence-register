@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import rfidLog, employee
-from .api.serializers import rfidLogSerializer, employeeSerializer
+from .models import rfidLog, employee, sensor
+from .api.serializers import rfidLogSerializer, employeeSerializer, sensorSerializer
 
 
 def index(request):
@@ -33,6 +33,13 @@ class employeesAPIView(APIView):
         serializer = employeeSerializer(employees, many=True)
         return Response(serializer.data)
     
+class sensorsAPIView(APIView):
+    def get(self, request):
+        sensors = sensor.objects.all()
+        serializer = sensorSerializer(sensors, many=True)
+        return Response(serializer.data)
+
+    
 class presentsAPIView(APIView):
     def get(self, request):
         employees = employee.objects.all()
@@ -48,15 +55,20 @@ class presentsAPIView(APIView):
 
 def employeesList(request):
     employees = employee.objects.all()
+    presents = []
+    absents = []
     for emp in employees:
         logs = rfidLog.objects.filter(employee=emp.rfid)
         if logs.count() > 0:
             if logs[logs.count() - 1].type == 'IN':
                 emp.present = True
+                presents.append(emp)
             else:
                 emp.present = False
+                absents.append(emp)
         else:
             emp.present = False
+    employees = presents + absents        
     return render(request, 'rfidLog/employeesList.html', {'employees': employees})
     
 def logsList(request):
@@ -65,3 +77,7 @@ def logsList(request):
         timestamp = log.timestamp
         log.timestamp = timestamp.strftime("Data: %d/%m/%Y | Horário: %H:%M:%S")
     return render(request, 'rfidLog/logsList.html', {'logs': logs})
+
+def sensorsList(request):
+    sensors = sensor.objects.all()
+    return render(request, 'rfidLog/sensorsList.html', {'sensors': sensors})

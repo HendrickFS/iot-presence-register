@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensores</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        li{
+            list-style: none;
+        }
+        .enabled{
+            border: 2px solid green;
+            padding: 20px;
+            margin: 10px;
+            width: 600px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .disabled{
+            border: 2px solid red;
+            padding: 20px;
+            margin: 10px;
+            width: 600px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .info{
+            display: flex;
+            flex-direction: column;
+        }
+        #enabled{
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            max-height: 50px;
+        }
+        #disabled{
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            max-height: 50px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Lista de Sensores:</h1>
+    <ul>
+        {% for sensor in sensors %}
+        <li>
+            {% if sensor.enabled %}
+            <div class="enabled">
+            {% else %}
+            <div class="disabled">
+            {% endif %}    
+                <div class="info">
+                    <h2>{{ sensor.id }}</h2>
+                    <p>{{ sensor.location }}</p>
+                </div>
+                {% if sensor.enabled %}
+                <button id="enabled">Desabilitar</button>
+                {% else %}
+                <button id="disabled">Habilitar</button>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

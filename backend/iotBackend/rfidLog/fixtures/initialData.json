@@ -1,0 +1,56 @@
+[
+    {
+        "model": "rfidLog.employee",
+        "pk": "59D3D54B",
+        "fields": {
+        "name": "Hendrick",
+        "email": "hendrickfel@gmail.com",
+        "icon": "https://github.com/HendrickFS.png"
+        }
+    },
+    {
+        "model": "rfidLog.employee",
+        "pk": "761961AF",
+        "fields": {
+        "name": "Xina",
+        "email": "xina@gmail.com",
+        "icon": "https://github.com/MasayukiBG.png"
+        }
+    },
+    {
+        "model": "rfidLog.sensor",
+        "pk": "16",
+        "fields": {
+            "location": "Entrada Principal",
+            "enabled": true
+        }
+    },
+    {
+        "model": "rfidLog.sensor",
+        "pk": "2",
+        "fields": {
+            "location": "Entrada Lateral",
+            "enabled": true
+        }
+    },
+    {
+        "model": "rfidLog.rfidLog",
+        "pk": "1",
+        "fields": {
+            "timestamp": "2024-11-20T21:09:27.781819-03:00",
+            "type": "IN",
+            "employee": "59D3D54B",
+            "sensor": "16"
+        }
+    },
+    {
+        "model": "rfidLog.rfidLog",
+        "pk": "2",
+        "fields": {
+            "timestamp": "2024-11-20T21:09:27.781819-03:00",
+            "type": "IN",
+            "employee": "761961AF",
+            "sensor": "16"
+        }
+    }
+]
