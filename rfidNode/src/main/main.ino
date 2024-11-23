@@ -55,7 +55,7 @@ void setup() {
 void loop() {
   updateCache(cache, cacheSize);
 
-  if (readRFID(uid, mfrc522) && enabled) {
+  if (readRFID(uid, mfrc522)) {
     if (isInCache(uid, cache, cacheSize)) {
       return;
     } else {
@@ -80,16 +80,7 @@ void loop() {
       Serial.println("Failed to send");
     }
   }
-  radio.startListening();
-  if(receivePackage(&radio, package, sizeof(package), myAddress, TIMEOUTSEND, &origin)){
-      Serial.print("Package received: ");
-      dumpToSerial(package, sizeof(package));
-      Serial.println();
-      if (verifySignal(package, sizeof(package))) {
-          Serial.println("Signal received");
-          enabled = !enabled;
-      }
-  }   
+  
   Serial.flush();
 }
 

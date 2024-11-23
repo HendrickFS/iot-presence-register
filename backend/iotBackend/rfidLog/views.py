@@ -95,6 +95,7 @@ def employeesList(request):
     
 def logsList(request):
     logs = rfidLog.objects.all()
+    logs = logs.order_by('-timestamp')
     for log in logs:
         timestamp = log.timestamp
         timestamp = timestamp.astimezone(timezone.get_current_timezone())
