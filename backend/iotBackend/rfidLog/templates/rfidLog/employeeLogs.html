@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Funcionários</title>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,8 +38,8 @@
         li{
             list-style: none;
         }
-        .employeePresent{
-            border: 2px solid green;
+        .log{
+            border: 2px solid blue;
             padding: 20px;
             margin: 10px;
             width: 600px;
@@ -48,22 +47,6 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-        }
-        .employeeAbsent{
-            border: 2px solid red;
-            padding: 20px;
-            margin: 10px;
-            width: 600px;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
-        #present{
-            color: green;
-        }
-        #absent{
-            color: red;
         }
         .icon{
             width: 100px;
@@ -92,44 +75,33 @@
             </li>
         </ul>
     </nav>
-    <h1 id="header">Lista de Funcionários:</h1>
-    <ul>
-        {% for employee in employees %}
+    <h1>Lista de Registros</h1>
+    <ul id="logs-container">
+        {% for log in empLogs %}
         <li>
-        {% if employee.present %}
-            <div class="employeePresent">
-        {% else %}
-            <div class="employeeAbsent">
-        {% endif %}
-            <div class="profile">
-                <div>
-                    <img src="{{employee.icon}}" alt="Foto do Funcionário" class="icon">
-                </div>
-                <div>
-                    <h2>
-                        <a href="/employeesLogs/{{employee.rfid}}" style="text-decoration: none;"> 
-                            {{employee.name}}
-                        </a>
-                    </h2>
-                    <p>
-                        {{employee.email}}
-                    </p>
-                </div>
-            </div>
+            <div class="log">
+                <div class="profile">
 
+                    <div>
+                        <img src="{{ log.employee.icon }}" alt="Foto do funcionário" class="icon">
+                    </div>
+                    <div>
+                        <h2>{{ log.employee.name }}</h2>
+                        <p>{{ log.timestamp }}</p>
+                    </div>
+                </div>
                 <div>
-                    {% if employee.present %}
-                        <h2 id="present">Presente</h2>
+                    {% if log.type == 'IN' %}
+                        <h2 id="log">Entrada</h2>
                     {% else %}
-                        <h2 id="absent">Ausente</h2>
+                        <h2 id="log">Saída</h2>
                     {% endif %}
+                        <p>{{log.sensor}}</p>
                 </div>
             </div>
         </li>
         {% empty %}
-            <li>
-                <h2>Não há Funcionários cadastrados</h2>
-            </li>
+            <li>Não há registros cadastrados.</li>
         {% endfor %}
     </ul>
 </body>
