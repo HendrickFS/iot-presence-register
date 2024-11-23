@@ -60,6 +60,7 @@
         }
 
     </style>
+    
 </head>
 <body>
     <nav>
@@ -76,7 +77,7 @@
         </ul>
     </nav>
     <h1>Lista de Registros:</h1>
-    <ul>
+    <ul id="logs-container">
         {% for log in logs %}
         <li>
             <div class="log">
@@ -96,6 +97,7 @@
                     {% else %}
                         <h2 id="log">Saída</h2>
                     {% endif %}
+                        <p>{{log.sensor}}</p>
                 </div>
             </div>
         </li>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class sensor(models.Model):
     id = models.IntegerField(primary_key=True, unique=True)
@@ -6,7 +7,7 @@ class sensor(models.Model):
     enabled = models.BooleanField(default=True) 
 
     def __str__(self):
-        return self.name
+        return self.location
 
 class employee(models.Model):
     rfid = models.CharField(max_length=10, primary_key=True, unique=True)
@@ -19,7 +20,7 @@ class employee(models.Model):
 
 class rfidLog(models.Model):
     employee = models.ForeignKey(employee, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(default=timezone.now)
     type = models.CharField(max_length=3)
     sensor = models.ForeignKey(sensor, on_delete=models.CASCADE, default=0)
 

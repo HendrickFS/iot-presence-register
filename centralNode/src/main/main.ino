@@ -7,8 +7,12 @@ uint64_t address[2] = { 0x3030303030LL, 0x3030303030LL};
 uint8_t myAddress = 50; // Node 01: 16, Node 02: 22, Central: 50
 #define TIMEOUTSEND 6000 //us
 
-byte uid[4] = {0x00, 0x00, 0x00, 0x00};
+byte uid[4];
 byte package[6];
+uint8_t origin;
+
+bool role = true;
+uint8_t destination = 0;
 
 void setup() {
     Serial.begin(9600); // Initialize serial communications with the PC
@@ -34,19 +38,21 @@ void setup() {
 }
 
 void loop() {
-    radio.startListening();
-    if(receivePackage(&radio, package, sizeof(package), myAddress, TIMEOUTSEND)){
-        Serial.print("Package received: ");
-        dumpToSerial(package, sizeof(package));
-        Serial.println();
-        for (byte i = 0; i < 4; i++) {
-            uid[i] = package[i + 2];
-        }
-        Serial.print("Received: ");
-        dumpToSerial(uid, sizeof(uid));
-        Serial.println();
-    }
-    delay(10);
+      radio.startListening();
+      if(receivePackage(&radio, package, sizeof(package), myAddress, TIMEOUTSEND, &origin)){
+          // Serial.print("Package received: ");
+          // dumpToSerial(package, sizeof(package));
+          // Serial.println();
+          for (byte i = 0; i < 4; i++) {
+              uid[i] = package[i + 2];
+          }
+          // Serial.print("Received: ");
+          Serial.print(origin);
+          dumpToSerial(uid, sizeof(uid));
+          Serial.println();
+      }
+
+      delay(10);
 }
 
 void dumpToSerial(byte* buffer, byte bufferSize) {

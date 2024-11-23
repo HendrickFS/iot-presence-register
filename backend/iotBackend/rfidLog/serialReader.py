@@ -6,11 +6,15 @@ def readSerial():
     print("Listening serial port...")
     while True:
         print("Received: ", ser.readline())
-        processData(ser.readline())
+        if(ser.readline().decode('utf-8').length() < 8):
+            pass
+        else:
+            processData(ser.readline())
 
 
 def processData(data):
     from rfidLog.models import employee, rfidLog
+    print("Processing data: ", data)
     employeeId = data.decode('utf-8')
     employeeId = employeeId.replace('\r\n', '')
     try:
@@ -20,7 +24,7 @@ def processData(data):
         if logs.count() == 0:
             newLog.type = 'IN'
         else:
-            if logs[0].type == 'IN':
+            if logs[logs.count()-1].type == 'IN':
                 newLog.type = 'OUT'
             else:
                 newLog.type = 'IN'

@@ -5,8 +5,8 @@ import serial
 from threading import Thread
 
 def main():
-    Thread(target=readSerial(), daemon=True).start()
-    Thread(target=writeSerial(), daemon=True).start()
+    Thread(target=readSerial, daemon=True).start()
+    # Thread(target=writeSerial, daemon=True).start()
     while True:
         pass
 

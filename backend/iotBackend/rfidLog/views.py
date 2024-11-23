@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import rfidLog, employee, sensor
 from .api.serializers import rfidLogSerializer, employeeSerializer, sensorSerializer
-
+import time
+from django.utils import timezone
 
 def index(request):
     return render(request, 'rfidLog/index.html')
@@ -15,7 +16,7 @@ class logsAPIView(APIView):
         serializer = rfidLogSerializer(logs, many=True)
         return Response(serializer.data)
     def post(self, request):
-        serializer = rfidLogSerializer(data=request.data)
+        print(request.data)
         logs = rfidLog.objects.filter(employee=request.data['employee'])
         if logs.count() == 0:
             request.data['type'] = 'IN'
@@ -24,7 +25,12 @@ class logsAPIView(APIView):
                 request.data['type'] = 'OUT'
             else:
                 request.data['type'] = 'IN'
-        
+        receiver = sensor.objects.get(id=request.data['id'])
+        request.data['sensor'] = receiver.id
+        request.data.pop('id')
+        print(request.data)
+        serializer = rfidLogSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -61,6 +67,13 @@ class presentsAPIView(APIView):
         serializer = employeeSerializer(presents, many=True)
         return Response(serializer.data)
     
+def disableSensor(request, id):
+    device = sensor.objects.get(id=id)
+    device.enabled = not device.enabled
+    device.save()
+    sensors = sensor.objects.all()
+    return render(request, 'rfidLog/sensorsList.html', {'sensors': sensors})
+    
 
 def employeesList(request):
     employees = employee.objects.all()
@@ -84,8 +97,11 @@ def logsList(request):
     logs = rfidLog.objects.all()
     for log in logs:
         timestamp = log.timestamp
+        timestamp = timestamp.astimezone(timezone.get_current_timezone())
         log.timestamp = timestamp.strftime("Data: %d/%m/%Y | Horário: %H:%M:%S")
+
     return render(request, 'rfidLog/logsList.html', {'logs': logs})
+
 
 def sensorsList(request):
     sensors = sensor.objects.all()

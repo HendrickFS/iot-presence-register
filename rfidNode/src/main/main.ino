@@ -9,12 +9,14 @@ MFRC522::MIFARE_Key key;
 CacheUid cache[10];
 byte cacheSize = 10;
 byte uid[4];
+bool enabled = true;
 byte package[6];
 
 RF24 radio(CE_PIN, CSN_PIN);
 uint64_t address[2] = { 0x3030303030LL, 0x3030303030LL};
-uint8_t myAddress = 16; // Node 01: 16, Node 02: 22, Central: 50
+uint8_t myAddress = 22; // Node 01: 16, Node 02: 22, Central: 50
 uint8_t destination = 50;
+uint8_t origin;
 
 void setup() {
     Serial.begin(9600); // Initialize serial communications with the PC
@@ -53,7 +55,7 @@ void setup() {
 void loop() {
   updateCache(cache, cacheSize);
 
-  if (readRFID(uid, mfrc522)) {
+  if (readRFID(uid, mfrc522) && enabled) {
     if (isInCache(uid, cache, cacheSize)) {
       return;
     } else {
@@ -77,8 +79,17 @@ void loop() {
     } else {
       Serial.println("Failed to send");
     }
-
   }
+  radio.startListening();
+  if(receivePackage(&radio, package, sizeof(package), myAddress, TIMEOUTSEND, &origin)){
+      Serial.print("Package received: ");
+      dumpToSerial(package, sizeof(package));
+      Serial.println();
+      if (verifySignal(package, sizeof(package))) {
+          Serial.println("Signal received");
+          enabled = !enabled;
+      }
+  }   
   Serial.flush();
 }
 
@@ -86,4 +97,13 @@ void dumpToSerial(byte* buffer, byte bufferSize) {
     for (byte i = 0; i < bufferSize; i++) {
         Serial.print(buffer[i], HEX);
     }
+}
+
+bool verifySignal(byte* package, byte packageSize) {
+    for(byte i = 2; i < packageSize; i++) {
+        if(package[i] != 0x00) {
+            return false;
+        }
+    }
+    return true;
 }

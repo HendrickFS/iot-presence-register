@@ -60,19 +60,12 @@
         }
         .info{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: space-between;
         }
-        #enabled{
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            max-height: 50px;
-        }
-        #disabled{
-            background-color: green;
+
+        button{
+            background-color: blue;
             color: white;
             border: none;
             padding: 10px;
@@ -105,15 +98,9 @@
             {% else %}
             <div class="disabled">
             {% endif %}    
-                <div class="info">
-                    <h2>{{ sensor.id }}</h2>
-                    <p>{{ sensor.location }}</p>
-                </div>
-                {% if sensor.enabled %}
-                <button id="enabled">Desabilitar</button>
-                {% else %}
-                <button id="disabled">Habilitar</button>
-                {% endif %}
+                <h2>{{ sensor.location }}</h2>
+                <h3>{{ sensor.id }}</h3>
+
             </div>
         </li>
         {% endfor %}

@@ -13,10 +13,10 @@ bool sendPackage(RF24* radio, char* package, uint8_t packageSize, uint8_t origin
         if (!radio->testCarrier()) {
             radio->write(&package[0], packageSize);
             sent=true;
-            Serial.println("S"); // Success sending
+            // Serial.println("S"); // Success sending
             break;
         }else{
-            Serial.println("W"); // Waiting for channel to be available
+            // Serial.println("W"); // Waiting for channel to be available
             delayMicroseconds(150);
         }
     }
@@ -40,7 +40,7 @@ bool sendPackage(RF24* radio, char* package, uint8_t packageSize, uint8_t origin
     return false;
 }
 
-bool receivePackage(RF24* radio, char* package, uint8_t packageSize, uint8_t myAddress, unsigned long timeout) {
+bool receivePackage(RF24* radio, char* package, uint8_t packageSize, uint8_t myAddress, unsigned long timeout, uint8_t* origin) {
     char packageACK[3];
     unsigned long start_timer = micros();                // start the timer
     bool sent = false;
@@ -50,8 +50,9 @@ bool receivePackage(RF24* radio, char* package, uint8_t packageSize, uint8_t myA
         if (radio->available()) {
             radio->read(&package[0], packageSize);
             if(package[0]==myAddress){
+                *origin=package[1];
                 received=true;
-                Serial.println("R"); // Success receiving
+                // Serial.println("R"); // Success receiving
                 break;
             }
             radio->flush_rx(); // Flush the buffer
@@ -75,10 +76,10 @@ bool receivePackage(RF24* radio, char* package, uint8_t packageSize, uint8_t myA
         if (!radio->testCarrier()) {
             radio->write(&packageACK[0], 3);
             sent=true;
-            Serial.println("S"); // Success sending
+            // Serial.println("S"); // Success sending
             break;
         }else{
-            Serial.println("W"); // Waiting for channel to be available
+            // Serial.println("W"); // Waiting for channel to be available
             delayMicroseconds(150);
         }
     }

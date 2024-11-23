@@ -3,7 +3,7 @@ from api import *
 import time
 
 def writeSerial():
-    ser = serial.Serial('COM4', 9600)
+    ser = serial.Serial('COM5', 9600)
     sensors = getSensors()
     states = {}
     for sensor in sensors:
