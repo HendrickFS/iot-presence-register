@@ -1,7 +1,7 @@
 import requests
 
-# base_url = "http://hendrickfs.pythonanywhere.com"
-base_url = "http://localhost:8000"
+base_url = "http://hendrickfs.pythonanywhere.com"
+# base_url = "http://localhost:8000"
 
 
 
@@ -22,4 +22,5 @@ def postLog(sensorId, rfid):
         "id": sensorId
     }
     response = requests.post(url, json=data)
+    print(response)
     # return response.json()

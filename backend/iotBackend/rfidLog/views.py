@@ -90,7 +90,7 @@ def employeesList(request):
                 absents.append(emp)
         else:
             emp.present = False
-    employees = presents + absents        
+    employees = presents + absents     
     return render(request, 'rfidLog/employeesList.html', {'employees': employees})
     
 def logsList(request):

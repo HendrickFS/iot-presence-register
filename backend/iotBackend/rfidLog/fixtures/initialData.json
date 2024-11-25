@@ -18,6 +18,15 @@
         }
     },
     {
+        "model": "rfidLog.employee",
+        "pk": "D311D52C",
+        "fields": {
+            "name": "Hugo",
+            "email": "hugo@gmail.com",
+            "icon": "https://github.com/HugoOkumura.png"
+        }
+    },
+    {
         "model": "rfidLog.sensor",
         "pk": "16",
         "fields": {
@@ -27,7 +36,7 @@
     },
     {
         "model": "rfidLog.sensor",
-        "pk": "2",
+        "pk": "22",
         "fields": {
             "location": "Entrada Lateral",
             "enabled": true
