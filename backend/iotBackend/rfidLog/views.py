@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,6 +7,7 @@ from .models import rfidLog, employee, sensor
 from .api.serializers import rfidLogSerializer, employeeSerializer, sensorSerializer
 import time
 from django.utils import timezone
+
 
 def index(request):
     return render(request, 'rfidLog/index.html')
@@ -102,6 +104,18 @@ def logsList(request):
         log.timestamp = timestamp.strftime("Data: %d/%m/%Y | Horário: %H:%M:%S")
 
     return render(request, 'rfidLog/logsList.html', {'logs': logs})
+
+def logsByEmployee(request, rfid):
+    empLogs = rfidLog.objects.filter(employee=rfid)
+    empLogs = empLogs.order_by('-timestamp')
+
+    for log in empLogs:
+        timestamp = log.timestamp
+        timestamp = timestamp.astimezone(timezone.get_current_timezone())
+        log.timestamp = timestamp.strftime("Data: %d/%m/%Y | Horário: %H:%M:%S")
+    
+    return render(request, 'rfidLog/employeeLogs.html', {'empLogs' : empLogs})
+
 
 
 def sensorsList(request):

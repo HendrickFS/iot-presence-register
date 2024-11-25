@@ -20,7 +20,7 @@ from rest_framework import routers
 
 from rfidLog.api import viewsets
 from rfidLog.views import logsAPIView, employeesAPIView, presentsAPIView, logsByEmployeeAPIView, sensorsAPIView, disableSensor
-from rfidLog.views import employeesList, logsList, sensorsList, index
+from rfidLog.views import employeesList, logsList, sensorsList, index, logsByEmployee
 
 route = routers.DefaultRouter()
 
@@ -40,5 +40,6 @@ urlpatterns = [
     path('employeesList/', employeesList, name='employeesList'),
     path('logsList/', logsList, name='logsList'),
     path('sensorsList/', sensorsList, name='sensorsList'),
+    path('employeesLogs/<str:rfid>/', logsByEmployee, name='employeesLogs'),
     path('', index, name='index'),
 ]
