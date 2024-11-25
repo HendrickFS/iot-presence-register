@@ -12,6 +12,7 @@
             padding: 0;
         }
         nav {
+            width: 100%;
             background-color: #333;
             padding: 10px;
         }
@@ -37,6 +38,7 @@
         }
         li{
             list-style: none;
+            max-width: 600px;
         }
         .enabled{
             border: 2px solid green;
@@ -76,21 +78,20 @@
 
         @media (max-width: 800px){
             .enabled{
-                width: 400px;
+                width: 85%;
             }
-            .disabled{
-                width: 400px;
+            body{
+                font-size: 12px;
+            }
+            
+            li{
+                margin-left: 0;
+            }
+            ul{
+                padding: 0;
             }
         }
 
-        @media (max-width: 750px){
-            .enabled{
-                width: 350px;
-            }
-            .disabled{
-                width: 350px;
-            }
-        }
     </style>
 </head>
 <body>
