@@ -4,18 +4,7 @@ A comprehensive IoT-based employee presence tracking system using RFID cards and
 
 ## 🏗️ System Architecture
 
-```
-┌─────────────┐    RF24     ┌──────────────┐    Serial    ┌─────────────────┐
-│ RFID Nodes  │◄───────────►│ Central Node │◄────────────►│ Gateway/Backend │
-│ (Arduino)   │   Wireless  │  (Arduino)   │      USB     │    (Python)     │
-└─────────────┘             └──────────────┘              └─────────────────┘
-      │                                                           │
-      │                                                           │
-   ┌──▼──┐                                                     ┌──▼──┐
-   │RFID │                                                     │ API │
-   │Card │                                                     │     │
-   └─────┘                                                     └─────┘
-```
+<img width="792" height="275" alt="image" src="https://github.com/user-attachments/assets/fed583af-5fa0-4fdc-8554-905880589ad0" />
 
 ### Components:
 - **RFID Nodes**: Arduino-based sensors with RFID readers and RF24 transceivers
