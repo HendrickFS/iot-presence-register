@@ -23,6 +23,9 @@ A comprehensive IoT-based employee presence tracking system using RFID cards and
 - **Gateway Serial**: Python application that processes serial data from central node
 - **Backend**: Django REST API for data storage and management
 
+![1760107439637](https://github.com/user-attachments/assets/5dbb3b7d-4a93-4916-8e52-6d1571952b01)
+
+
 ## 📋 Features
 
 - **Real-time RFID Detection**: Multiple distributed RFID sensor nodes
@@ -265,17 +268,6 @@ class rfidLog(models.Model):
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Authors
-
-- **HendrickFS** - *Initial work* - [HendrickFS](https://github.com/HendrickFS)
-
-## 🙏 Acknowledgments
-
-- MFRC522 library contributors
-- RF24 library contributors
-- Django and Django REST Framework teams
-- Arduino community
 
 ---
 
