@@ -1,4 +1,4 @@
-# IoT Presence Register System
+# IoT (Internet of Things) Presence Register System
 
 A comprehensive IoT-based employee presence tracking system using RFID cards and RF24 wireless communication modules. The system consists of distributed RFID sensors, a central communication hub, and a Django-based backend with REST API.
 
